@@ -66,14 +66,32 @@ export class CreateUserDto {
   @IsNotEmpty()
   password2: string;
 
+  @ApiProperty({
+    example: 'John',
+    description: 'First Name',
+    format: 'name',
+    uniqueItems: false,
+    minLength: 1,
+    maxLength: 20,
+    nullable: false,
+  })
   @MaxLength(20)
-  @MinLength(8)
+  @MinLength(1)
   @IsString()
   @IsNotEmpty()
   firstName: string;
 
+  @ApiProperty({
+    example: 'Doe',
+    description: 'Last Name',
+    format: 'name',
+    uniqueItems: false,
+    minLength: 1,
+    maxLength: 20,
+    nullable: false,
+  })
   @MaxLength(20)
-  @MinLength(8)
+  @MinLength(1)
   @IsString()
   @IsNotEmpty()
   lastName: string;
