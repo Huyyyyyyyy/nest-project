@@ -6,6 +6,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
+import { IsPasswordMatching } from 'src/common/decorator/match.decorator';
 
 export class UpdatePasswordDto {
   @ApiProperty({
@@ -54,6 +55,9 @@ export class UpdatePasswordDto {
     format: 'password',
     uniqueItems: false,
     nullable: false,
+  })
+  @IsPasswordMatching('newPassword', {
+    message: 'Your new password is not match',
   })
   @IsNotEmpty()
   @MaxLength(20)

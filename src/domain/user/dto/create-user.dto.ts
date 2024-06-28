@@ -63,7 +63,7 @@ export class CreateUserDto {
   @MinLength(8)
   @IsString()
   @IsNotEmpty()
-  @IsPasswordMatching()
+  @IsPasswordMatching('password')
   password2: string;
 
   @ApiProperty({
