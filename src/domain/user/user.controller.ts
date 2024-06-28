@@ -9,6 +9,7 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 
 // decorator type : class , method, params, property
 // @ApiBearerAuth()
@@ -25,5 +26,15 @@ export class UserController {
   @Post('/register')
   register(@Body() data: CreateUserDto) {
     this.userService.register(data);
+  }
+
+
+  @ApiOperation({
+    summary : 'Update new password for user'
+  })
+  @ApiBadRequestResponse({description : 'Update password failed'})
+  @Post('/updatePassword')
+  updatePassword(@Body() data: UpdatePasswordDto){
+    this.userService.updatePassword(data)
   }
 }
