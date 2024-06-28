@@ -9,6 +9,8 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
+import { IsPasswordMatching } from 'src/common/decorator/match.decorator';
+import { ValidatePhone } from 'src/common/decorator/phone.decorator';
 import { EUserRole } from 'src/common/interface';
 
 export class CreateUserDto {
@@ -31,8 +33,7 @@ export class CreateUserDto {
 
   // at least 1 uppercase, 1 lowercase, 1 number, 1 special character
   @ApiProperty({
-    example:
-      'password must be included at least 1 uppercase, lowercase, number, special character',
+    example: 'H0397363542h@',
     description: 'Password',
     format: 'password',
     uniqueItems: false,
@@ -50,8 +51,7 @@ export class CreateUserDto {
   password: string;
 
   @ApiProperty({
-    example:
-      'password must be included at least 1 uppercase, lowercase, number, special character',
+    example: 'H0397363542h@',
     description: 'Confirm Password',
     format: 'confirm password',
     uniqueItems: false,
@@ -59,11 +59,11 @@ export class CreateUserDto {
     maxLength: 20,
     nullable: false,
   })
-  @Matches('password')
   @MaxLength(20)
   @MinLength(8)
   @IsString()
   @IsNotEmpty()
+  @IsPasswordMatching()
   password2: string;
 
   @ApiProperty({
@@ -97,17 +97,44 @@ export class CreateUserDto {
   lastName: string;
 
   //validate phone number (valid/invalid)
+  @ApiProperty({
+    example: '0397363542',
+    description: 'Phone number',
+    format: 'phone',
+    uniqueItems: true,
+    minLength: 10,
+    maxLength: 12,
+    nullable: true,
+  })
   @IsString()
   @IsOptional()
+  @ValidatePhone({ message: 'Phone number is invalid' })
   phone?: string;
 
   //dayjs / validate belongs timezone list of dayjs
+  @ApiProperty({
+    example: 'Asia/Ho_Chi_Minh',
+    description: 'Timezone Code',
+    format: 'Timezone Code',
+    uniqueItems: false,
+    nullable: false,
+  })
   @IsString()
   @IsNotEmpty()
   timezoneCode: string;
 
+  @ApiProperty({
+    example: 'client',
+    description: 'User Role',
+    format: 'role',
+    uniqueItems: false,
+    nullable: false,
+  })
   @IsString()
   @IsNotEmpty()
-  @IsEnum([EUserRole.client, EUserRole.coach])
+  @IsEnum([EUserRole.client, EUserRole.coach], {
+    message:
+      'Role must be included one of roles in our system "client / onwer / coach"',
+  })
   role: string;
 }
