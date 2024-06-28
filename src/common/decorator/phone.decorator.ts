@@ -5,6 +5,7 @@ import {
 } from 'class-validator';
 import { Country, getCountryForTimezone } from 'countries-and-timezones';
 import {
+  PhoneNumber,
   getCountryCallingCode,
   isSupportedCountry,
   parsePhoneNumberFromString,
@@ -18,16 +19,16 @@ export const ValidatePhone = (validationOptions?: ValidationOptions) => {
       propertyName: propertyName,
       options: validationOptions,
       validator: {
-        validate(value: any, args: ValidationArguments) {
+        validate(value: string, args: ValidationArguments) {
           if (!value) return true;
           const object: Object = args.object;
           const timezone: string = object['timezoneCode'];
           const country: Country = getCountryForTimezone(timezone);
-          const countryCode: any = country['id'];
+          const countryCode: string = country['id'];
           if (!isSupportedCountry(countryCode)) return false;
-          const countryCallingCode = getCountryCallingCode(countryCode);
-          const formattedPhoneNumber = `+${countryCallingCode}${value}`
-          const phoneNumber = parsePhoneNumberFromString(formattedPhoneNumber);
+          const countryCallingCode: string = getCountryCallingCode(countryCode);
+          const formattedPhoneNumber: string = `+${countryCallingCode}${value}`;
+          const phoneNumber: PhoneNumber = parsePhoneNumberFromString(formattedPhoneNumber);
           return !phoneNumber ? false : phoneNumber.isValid();
         },
         defaultMessage() {
