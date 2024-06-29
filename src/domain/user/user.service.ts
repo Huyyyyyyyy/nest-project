@@ -6,7 +6,11 @@ export class UserService {
     console.log('register', data);
   }
 
-  updatePassword(data : any){
-    console.log('update password to ', data['newPassword'] )
+  updatePassword(data: any) {
+    console.log('update password to ', data['newPassword']);
+  }
+
+  updateUser(data: any) {
+    console.log('updated user ', data);
   }
 }

@@ -134,7 +134,7 @@ export class CreateUserDto {
   @IsNotEmpty()
   @IsEnum([EUserRole.client, EUserRole.coach], {
     message:
-      'Role must be included one of roles in our system "client / onwer / coach"',
+      'Role must be included one of roles in our system "client / owner / coach"',
   })
   role: string;
 }
