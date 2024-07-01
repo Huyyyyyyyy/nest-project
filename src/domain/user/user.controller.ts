@@ -10,6 +10,7 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { UpdatePasswordDto } from './dto/update-password.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 // decorator type : class , method, params, property
 // @ApiBearerAuth()
@@ -28,13 +29,21 @@ export class UserController {
     this.userService.register(data);
   }
 
+  @ApiOperation({
+    summary: 'Update new password for user',
+  })
+  @ApiBadRequestResponse({ description: 'Update password failed' })
+  @Post('/updatePassword')
+  updatePassword(@Body() data: UpdatePasswordDto) {
+    this.userService.updatePassword(data);
+  }
 
   @ApiOperation({
-    summary : 'Update new password for user'
+    summary: 'Update user information',
   })
-  @ApiBadRequestResponse({description : 'Update password failed'})
-  @Post('/updatePassword')
-  updatePassword(@Body() data: UpdatePasswordDto){
-    this.userService.updatePassword(data)
+  @ApiBadRequestResponse({ description: 'Update user failed' })
+  @Post('/updateUser')
+  updateUser(@Body() data: UpdateUserDto) {
+    this.userService.updateUser(data);
   }
 }
