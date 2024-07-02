@@ -1,9 +1,30 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
+import { DatabaseService } from 'src/database/database.service';
 
 @Injectable()
 export class UserService {
-  register(data: any) {
-    console.log('register', data);
+  constructor(private databaseService: DatabaseService) {}
+
+  findMany() {
+    this.databaseService.user.findMany();
+  }
+
+  create(data: Prisma.UserCreateInput) {
+    const userData = {
+      id: 3,
+      email: data.email,
+      password: data.password,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      timezoneCode: data.timezoneCode,
+      phone: data.phone,
+    };
+    console.log(userData);
+
+    return this.databaseService.user.create({
+      data: userData,
+    });
   }
 
   updatePassword(data: any) {

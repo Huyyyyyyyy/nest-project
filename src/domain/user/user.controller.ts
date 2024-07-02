@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import {
@@ -19,6 +19,11 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @Get('/users')
+  findMany() {
+    return this.userService.findMany();
+  }
+
   @ApiOperation({
     summary: 'Register a new user',
   })
@@ -26,7 +31,7 @@ export class UserController {
   @ApiBadRequestResponse({ description: 'Validation failed' })
   @Post('/register')
   register(@Body() data: CreateUserDto) {
-    this.userService.register(data);
+    this.userService.create(data);
   }
 
   @ApiOperation({
