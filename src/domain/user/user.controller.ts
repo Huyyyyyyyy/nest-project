@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import {
@@ -11,6 +11,9 @@ import {
 } from '@nestjs/swagger';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UserReq } from 'src/common/decorator/user.decorator';
+import { User } from '@prisma/client';
+import { Public } from 'src/common/decorator/public.decorator';
 
 // decorator type : class , method, params, property
 // @ApiBearerAuth()
@@ -25,6 +28,7 @@ export class UserController {
     return this.userService.findMany();
   }
 
+  @Public()
   @ApiOperation({
     summary: 'Register a new user',
   })
@@ -33,6 +37,11 @@ export class UserController {
   @Post('/register')
   register(@Body() data: CreateUserDto) {
     return this.userService.create(data);
+  }
+
+  @Get('/me')
+  getMe(@UserReq() user: User) {
+    return user;
   }
 
   @ApiOperation({

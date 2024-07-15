@@ -1,9 +1,14 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../user/user.service';
+import { JwtService } from '@nestjs/jwt';
+import { Reflector } from '@nestjs/core';
 
 @Injectable()
 export class AuthService {
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private jwtService: JwtService,
+  ) {}
 
   async signIn(email: string, password: string) {
     const foundUser = await this.userService.findOneOrFailByEmail(email);
@@ -15,7 +20,14 @@ export class AuthService {
     if (!isMatched) {
       throw new UnauthorizedException('Invalid password');
     }
+    const payload = {
+      sub: foundUser.id,
+      email: foundUser.email,
+      //TODO : add role
+    };
 
-    return foundUser;
+    const jwt = await this.jwtService.signAsync(payload);
+
+    return { jwt, payload };
   }
 }
