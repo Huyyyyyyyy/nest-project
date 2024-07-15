@@ -7,12 +7,11 @@ export class UserService {
   constructor(private databaseService: DatabaseService) {}
 
   findMany() {
-    this.databaseService.user.findMany();
+    return this.databaseService.user.findMany();
   }
 
   create(data: Prisma.UserCreateInput) {
     const userData = {
-      id: 3,
       email: data.email,
       password: data.password,
       firstName: data.firstName,
@@ -20,7 +19,6 @@ export class UserService {
       timezoneCode: data.timezoneCode,
       phone: data.phone,
     };
-    console.log(userData);
 
     return this.databaseService.user.create({
       data: userData,

@@ -31,7 +31,7 @@ export class UserController {
   @ApiBadRequestResponse({ description: 'Validation failed' })
   @Post('/register')
   register(@Body() data: CreateUserDto) {
-    this.userService.create(data);
+    return this.userService.create(data);
   }
 
   @ApiOperation({
