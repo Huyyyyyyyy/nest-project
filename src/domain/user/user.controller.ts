@@ -14,6 +14,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 
 // decorator type : class , method, params, property
 // @ApiBearerAuth()
+//Exclude password from response
 @ApiTags('User')
 @Controller('user')
 export class UserController {
