@@ -1,15 +1,6 @@
 import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { CreateSessionTemplateDto } from './dto/create-session-template.dto';
-import {
-  ApiBadRequestResponse,
-  ApiForbiddenResponse,
-  ApiInternalServerErrorResponse,
-  ApiOkResponse,
-  ApiOperation,
-  ApiTags,
-  ApiUnauthorizedResponse,
-  ApiUnprocessableEntityResponse,
-} from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import { SesionTemplateResponeDto } from './dto/session-template-response.dto';
 import { ApiOperationDecorator } from 'src/common/decorator/api-operation.decorator';
 import { UpdateSessionTemplateDto } from './dto/update-session-template.dto';

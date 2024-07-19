@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import {
@@ -11,14 +11,24 @@ import {
 } from '@nestjs/swagger';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UserReq } from 'src/common/decorator/user.decorator';
+import { User } from '@prisma/client';
+import { Public } from 'src/common/decorator/public.decorator';
 
 // decorator type : class , method, params, property
 // @ApiBearerAuth()
+//Exclude password from response
 @ApiTags('User')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @Get('/users')
+  findMany() {
+    return this.userService.findMany();
+  }
+
+  @Public()
   @ApiOperation({
     summary: 'Register a new user',
   })
@@ -26,7 +36,12 @@ export class UserController {
   @ApiBadRequestResponse({ description: 'Validation failed' })
   @Post('/register')
   register(@Body() data: CreateUserDto) {
-    this.userService.register(data);
+    return this.userService.create(data);
+  }
+
+  @Get('/me')
+  getMe(@UserReq() user: User) {
+    return user;
   }
 
   @ApiOperation({
