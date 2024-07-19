@@ -20,6 +20,7 @@ import { Public } from 'src/common/decorator/public.decorator';
 //Exclude password from response
 @ApiTags('User')
 @Controller('user')
+@ApiBearerAuth()
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -36,7 +37,7 @@ export class UserController {
   @ApiBadRequestResponse({ description: 'Validation failed' })
   @Post('/register')
   register(@Body() data: CreateUserDto) {
-    return this.userService.create(data);
+    return this.userService.createWithHash(data);
   }
 
   @Get('/me')

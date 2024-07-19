@@ -2,29 +2,29 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { DatabaseService } from 'src/database/database.service';
 import * as bcrypt from 'bcrypt';
+import { BaseService } from 'src/common/service/base.service';
 
 @Injectable()
-export class UserService {
-  constructor(private databaseService: DatabaseService) {}
-
-  findMany() {
-    return this.databaseService.user.findMany();
+export class UserService extends BaseService<
+  Prisma.UserCreateArgs,
+  Prisma.UserCreateInput
+> {
+  constructor(databaseService: DatabaseService) {
+    super(databaseService, 'User');
   }
 
-  async create(data: Prisma.UserCreateInput) {
+  async createWithHash(data: Prisma.UserCreateInput) {
     const hashedPassword = await this.hashPassword(data.password);
     const userData = {
       email: data.email,
       password: hashedPassword,
       firstName: data.firstName,
       lastName: data.lastName,
-      timezoneCode: data.timezoneCode,
       phone: data.phone,
+      timezoneCode: data.timezoneCode,
     };
 
-    return this.databaseService.user.create({
-      data: userData,
-    });
+    return this.create({ data: userData });
   }
 
   async hashPassword(password: string) {
