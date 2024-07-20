@@ -15,6 +15,7 @@ async function bootstrap() {
     .setDescription('The Booking API description')
     .setVersion('1.0')
     .addTag('Booking')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
@@ -31,6 +32,6 @@ async function bootstrap() {
       transform: true,
     }),
   );
-  await app.listen(3000);
+  await app.listen(+process.env.APP_PORT);
 }
 bootstrap();
