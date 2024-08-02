@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import {
@@ -14,6 +21,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UserReq } from 'src/common/decorator/user.decorator';
 import { User } from '@prisma/client';
 import { Public } from 'src/common/decorator/public.decorator';
+import { SerializeInterceptor } from 'src/interceptor/serialize.interceptor';
 
 // decorator type : class , method, params, property
 // @ApiBearerAuth()
@@ -40,6 +48,7 @@ export class UserController {
     return this.userService.createWithHash(data);
   }
 
+  @UseInterceptors(SerializeInterceptor)
   @Get('/me')
   getMe(@UserReq() user: User) {
     return user;
