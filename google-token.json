@@ -1,0 +1,11 @@
+{
+  "status": 200,
+  "message": "success",
+  "data": {
+    "access_token": "ya29.a0AcM612y3pBv3atDOkuCaS8El9_7lNjEH6SUXHqoGBqlf22hFGNj9HIsyOCenQi0TKi6GmKwOOLwmGCegU6lOeWFjzUNVRCNDqOFnxHbggtOzBl-sWJaoYEA9hNECejF7WvqSZoXmbuo4EkrDAWSHyCjfuerK7lXD5pYGaCgYKAQcSARASFQHGX2Miz_2yVGguYfd4e4-1fnCpug0171",
+    "refresh_token": "1//0eGn9G4SgYcY_CgYIARAAGA4SNwF-L9IrQcJgNTKjNi1MSI-62D4sGhDCma0DsEuMGNPnf9HdBcsUac5GL1CI4SzuY1TNKXo0AZ8",
+    "scope": "https://www.googleapis.com/auth/calendar.events.owned",
+    "token_type": "Bearer",
+    "expiry_date": 1723190128835
+  }
+}

@@ -51,14 +51,16 @@ export function validate(config: Record<string, unknown>) {
   return ValidatedConfig;
 }
 
- const config = {
+const config = {
   APP_NAME: process.env.APP_NAME || 'booking-service',
   APP_PORT: +process.env.APP_PORT || 3000,
   DATABASE_HOST: process.env.DATABASE_HOST,
   DATABASE_PORT: process.env.DATABASE_PORT,
   DATABASE_NAME: process.env.DATABASE_NAME,
-  DATABASE_USER : process.env.DATABASE_USER,
+  DATABASE_USER: process.env.DATABASE_USER,
   DATABASE_PASSWORD: process.env.DATABASE_PASSWORD,
+  GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
 };
 
 export default config;
