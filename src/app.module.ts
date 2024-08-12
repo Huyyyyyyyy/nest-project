@@ -10,12 +10,14 @@ import { validate } from './config';
 import { LoggerMiddleware } from './middleware/logger.middleware';
 import { HealthModule } from './domain/health/health.module';
 import { LoggingInterceptor } from './interceptor/logging.interceptor';
+import { CredentialModule } from './domain/credential/credential.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       validate,
     }),
+    CredentialModule,
     HealthModule,
     UserModule,
     SessionTemplateModule,
